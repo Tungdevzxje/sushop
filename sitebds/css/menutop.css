@@ -1,0 +1,212 @@
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 250px;
+  height: 100vh;
+  background: yellow;
+  padding-top: 50px;
+  transition: left 0.3s ease-in-out;
+  z-index: 9999;
+  display: block;
+}
+
+.mobile-menu.open {
+  left: 0;
+}
+
+.mobile-menu-container {
+  background-color: #ffc107;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 55px;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.mobile-menu-btn {
+  font-size: 24px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.mobile-menu-container img {
+  width: auto;
+}
+
+/* Nút đóng menu */
+.mobile-menu .close-menu {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Menu danh sách */
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mobile-menu ul li {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #444;
+}
+
+.mobile-menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* Khi màn hình lớn hơn 576px, ẩn menu */
+@media (min-width: 576px) {
+  .mobile-menu-container,
+  .mobile-menu {
+    display: none !important;
+  }
+}
+
+/* Khi header cố định */
+@media (max-width: 575px) {
+  #header.cloned.sticky {
+    top: 0;
+    width: 100%;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .mobile-menu-container {
+    z-index: 11000;
+    /* Luôn hiển thị trên cùng */
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 56px;
+    left: -100%;
+    width: 250px;
+    height: 100vh;
+    background: #333;
+    transition: left 0.3s ease-in-out;
+    z-index: 9999;
+  }
+
+  .mobile-menu.open {
+    left: 0;
+  }
+}
+
+input:-webkit-autofill {
+  background-color: white !important;
+  color: black !important;
+  box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+.header-search-menu {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 20px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  width: 180px;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff385c;
+  font-size: 16px;
+}
+
+.slideDown {
+  text-align: center;
+
+  animation-name: slideDown;
+  -webkit-animation-name: slideDown;
+  animation-duration: 2s;
+  -webkit-animation-duration: 2s;
+
+  animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+
+  visibility: visible !important;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  50% {
+    transform: translateY(8%);
+  }
+
+  65% {
+    transform: translateY(-4%);
+  }
+
+  80% {
+    transform: translateY(4%);
+  }
+
+  95% {
+    transform: translateY(-2%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@-webkit-keyframes slideDown {
+  0% {
+    -webkit-transform: translateY(-100%);
+  }
+
+  50% {
+    -webkit-transform: translateY(8%);
+  }
+
+  65% {
+    -webkit-transform: translateY(-4%);
+  }
+
+  80% {
+    -webkit-transform: translateY(4%);
+  }
+
+  95% {
+    -webkit-transform: translateY(-2%);
+  }
+
+  100% {
+    -webkit-transform: translateY(0%);
+  }
+}

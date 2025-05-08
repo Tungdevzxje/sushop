@@ -1,0 +1,54 @@
+##Options +FollowSymLinks All
+RewriteEngine On
+
+Options -Indexes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule  ^trangchu$ index.php
+
+RewriteRule  ^dongphuc-danang$ chitiet.php?thamso=gioi_thieu
+RewriteRule  ^gioithieu/(.*)-(.*)$ chitiet.php?thamso=chitiet_gioithieu&url=$1&id=$2
+
+RewriteRule  ^lichsu-dathang$ chitiet.php?thamso=lichsu_donhang
+
+RewriteRule  ^dang-ky$ chitiet.php?thamso=dangky
+RewriteRule  ^dang-nhap$ chitiet.php?thamso=dangnhap
+RewriteRule  ^dang-xuat$ chitiet.php?thamso=dangxuat
+
+RewriteRule  ^dong-phuc-cong-so$ chitiet.php?thamso=tin_dichvu
+RewriteRule  ^dongphuc-nhahang/([0-9]+)$ chitiet.php?thamso=tin_dichvu&page=$1
+RewriteRule  ^dongphuc-khachsan/(.*)$ chitiet.php?thamso=tin_dichvuct&url=$1&id=$2
+RewriteRule  ^dichvu/([a-zA-Z0-9_-]+)/page=([0-9]+)$ chitiet.php?thamso=tin_dichvu&url=$1&page=$2
+RewriteRule  ^san-pham/(.*)-(.*)$ chitiet.php?thamso=chitiet_tindichvu&url=$1&id=$2
+
+RewriteRule  ^size$ chitiet.php?thamso=tin_dichvuu
+RewriteRule  ^dongphuc-thethao/([0-9]+)$ chitiet.php?thamso=tin_dichvuu&page=$1
+RewriteRule  ^dongphuc-cap3/(.*)$ chitiet.php?thamso=tin_dichvuuct&url=$1&id=$2
+RewriteRule  ^dichvu/([a-zA-Z0-9_-]+)/page=([0-9]+)$ chitiet.php?thamso=tin_dichvuu&url=$1&page=$2
+RewriteRule  ^dichvu/(.*)-(.*)$ chitiet.php?thamso=chitiet_tindichvuu&url=$1&id=$2
+
+RewriteRule  ^dong-phuc-hoc-sinh$ chitiet.php?thamso=ma_sanpham
+RewriteRule  ^dong-phuc-hoc-sinh/([0-9]+)$ chitiet.php?thamso=ma_sanpham&page=$1
+RewriteRule  ^danh-muc/(.*)$ chitiet.php?thamso=ma_sanphamct&url=$1&id=$2
+RewriteRule  ^([a-zA-Z0-9_-]+)/([0-9]+)$ chitiet.php?thamso=ma_sanphamct&url=$1&page=$2
+RewriteRule  ^chitiet/(.*)-(.*)$ chitiet.php?thamso=chitiet_masanpham&url=$1&id=$2
+
+RewriteRule  ^xu-huong-dong-phuc$ chitiet.php?thamso=tin_tintuc
+RewriteRule  ^xu-huong-dong-phuc/trang/([0-9]+)$ chitiet.php?thamso=tin_tintuc&page=$1
+RewriteRule  ^dongphuc-tieuhoc/(.*)$ chitiet.php?thamso=tin_tintucct&url=$1&id=$2
+RewriteRule  ^dongphuc-trunghoc/([a-zA-Z0-9_-]+)/page=([0-9]+)$ chitiet.php?thamso=tin_tintuc&url=$1&page=$2
+RewriteRule  ^tintuc/(.*)-(.*)$ chitiet.php?thamso=chitiet_tintintuc&url=$1&id=$2
+
+RewriteRule  ^lien-he$ chitiet.php?thamso=lien_he
+
+
+RewriteRule ^search/(.*)$ timkiem.php?q=$1 [L,QSA]
+RewriteRule ^search/$ /index.php [L,R=301]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
