@@ -43,6 +43,116 @@ include("ham/ham.php");
 
 	<!-- Ekka CSS -->
 	<link id="ekka-css" href="assets/css/ekka.css" rel="stylesheet" />
+	<style>
+		.banner-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 20px;
+			padding: 15px 0;
+			flex-wrap: nowrap;
+		}
+
+		.banner-column {
+			flex: 2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.banner-column img {
+			max-height: 70px;
+			height: auto;
+			width: auto;
+			object-fit: contain;
+			margin: 0 5px;
+		}
+
+		.banner-column.center {
+			flex: 2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.search-wrapper {
+			position: relative;
+			width: 100%;
+			max-width: 600px;
+		}
+
+		.search-bar {
+			display: flex;
+			width: 100%;
+			align-items: stretch;
+		}
+
+		#searchBox {
+			flex: 1;
+			padding: 12px 15px;
+			font-size: 16px;
+			color: #1f7f5c !important;
+			border: 1px solid #ccc;
+			border-right: none;
+			border-radius: 6px 0 0 6px;
+			outline: none;
+			box-sizing: border-box;
+		}
+
+		.btn-search {
+			padding: 0 20px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			background-color: #1f7f5c;
+			color: white;
+			border-radius: 0 6px 6px 0;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+		}
+
+		.btn-search:hover {
+			background-color: #155f47;
+		}
+
+		#suggestionBox {
+			position: absolute;
+			top: calc(100% + 5px);
+			left: 0;
+			width: 100%;
+			background: #fff;
+			max-height: 300px;
+			overflow-y: auto;
+			z-index: 10001;
+			border-radius: 0 0 6px 6px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.banner-topbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 20px;
+			padding: 10px 0;
+			flex-wrap: nowrap;
+		}
+
+		.slogan {
+			font-style: italic;
+			color: #333;
+		}
+
+		.hotline {
+			font-weight: bold;
+			color: #1f7f5c;
+		}
+
+		.divider-line {
+			margin: 0 10px 10px;
+			border: none;
+			border-top: 1px solid #ccc;
+		}
+	</style>
 
 	<!-- FAVICON -->
 	<link href="hinh/logo.png" rel="shortcut icon" />
@@ -106,17 +216,32 @@ if ($xacdinh_dangnhap != "co") {
 								class="mdi mdi-microsoft-xbox-controller-menu"></span></button>
 						<!-- search form -->
 						<div class="search-form d-lg-inline-block">
-							<div class="input-group">
-								<input type="text" name="query" id="search-input" class="form-control"
-									placeholder="search.." autofocus autocomplete="off" />
-								<button type="button" name="search" id="search-btn" class="btn btn-flat">
-									<i class="mdi mdi-magnify"></i>
-								</button>
-							</div>
-							<div id="search-results-container">
-								<ul id="search-results"></ul>
+							<div class="search-wrapper"
+								style="position: relative; width: 100%; max-width: 600px; margin: auto;">
+								<div class="search-bar" style="display: flex;">
+									<input name="q" class="search-input" type="text" id="searchBox"
+										placeholder="Tìm kiếm..." autocomplete="off" />
+									<button class="btn-search">TÌM KIẾM</button>
+								</div>
+								<div id="suggestionBox" class="suggestion-box"></div>
 							</div>
 						</div>
+						<script>
+							document.getElementById('searchBox').addEventListener('input', function () {
+								const keyword = this.value;
+
+								if (keyword.length === 0) {
+									document.getElementById('suggestionBox').innerHTML = '';
+									return;
+								}
+
+								fetch('timkiem_quantri.php?q=' + encodeURIComponent(keyword))
+									.then(response => response.text())
+									.then(data => {
+										document.getElementById('suggestionBox').innerHTML = data;
+									});
+							});
+						</script>
 
 						<!-- navbar right -->
 						<div class="navbar-right">
