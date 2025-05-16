@@ -12,6 +12,9 @@ RewriteRule  ^gioithieu/(.*)-(.*)$ chitiet.php?thamso=chitiet_gioithieu&url=$1&i
 
 RewriteRule  ^lichsu-dathang$ chitiet.php?thamso=lichsu_donhang
 
+RewriteRule  ^gio-hang$ chitiet.php?thamso=view_cart
+
+
 RewriteRule  ^dang-ky$ chitiet.php?thamso=dangky
 RewriteRule  ^dang-nhap$ chitiet.php?thamso=dangnhap
 RewriteRule  ^dang-xuat$ chitiet.php?thamso=dangxuat

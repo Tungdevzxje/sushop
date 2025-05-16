@@ -36,10 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         showConfirmButton: false,
                         timer: 2000
                     }).then(() => {
-                        window.location.href = '/dongphuc/trangchu';
+                        window.location.href = '/su/trangchu';
                     });
                     setTimeout(() => {
-                        window.location.href = '/dongphuc/trangchu';
+                        window.location.href = '/su/trangchu';
                     }, 2000);
                 </script>
             </body>

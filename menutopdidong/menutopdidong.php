@@ -36,11 +36,11 @@
             // Kiểm tra nếu người dùng đã đăng nhập
             if (isset($_SESSION['user_id'])) {
                 echo "<div style='text-align: right;'>
-                        <span style='color: #333;'>Xin chào, 
+                        <span style='color: #333;'>Xin chào,
                             <a href='lichsu-dathang' style='color: #4CAF50; font-weight: bold; text-decoration: none;'>"
-                            . htmlspecialchars($_SESSION['fullname']) . 
+                            . htmlspecialchars($_SESSION['fullname']) .
                         "</a>
-                        </span> | 
+                        </span> |
                         <a href='dang-xuat' style='color: red; text-decoration: none;'><b>Đăng xuất</b></a>
                     </div>";
             } else {
