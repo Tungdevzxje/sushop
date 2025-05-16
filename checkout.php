@@ -170,8 +170,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hoten'])) {
                 <p>Chủ tài khoản: <strong>TRAN ANH TUNG</strong></p>
                 <p>Nội dung chuyển khoản: <strong>DH' . $donhang_id . '</strong></p>
                 <p>Số tiền: <strong>' . number_format($tongtien) . ' đ</strong></p>
-                <p><img src="https://img.vietqr.io/image/MB-0935687375-compact2.jpg?amount=<?= $tongtien ?>&addInfo=DH<?= $donhang_id ?>&accountName=TRAN%20ANH%20TUNG" alt="QR chuyển khoản" style="max-width:250px;">
-</p>
+                <p><img src="https://img.vietqr.io/image/MB-0935687375-compact2.jpg?amount=' . $tongtien . '&addInfo=DH' . $donhang_id . '&accountName=TRAN%20ANH%20TUNG"
+             alt="QR chuyển khoản" style="max-width:250px;"></p>
             </div>';
     }
 
@@ -231,11 +231,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hoten'])) {
 
                     <div class="mb-3">
                         <label for="thanhtoan" class="form-label">Phương thức thanh toán</label>
-                        <select class="form-select" name="thanhtoan" required>
+                        <select class="form-select" name="thanhtoan" id="thanhtoan-select" required onchange="hienThongBao()">
                             <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
                             <option value="Chuyển khoản ngân hàng">Chuyển khoản ngân hàng</option>
                         </select>
+                        <div id="thongbao-chuyenkhoan" class="mt-2 text-danger" style="display: none;">
+                            ⚠ Sau khi đặt hàng, bạn sẽ nhận được mã QR chuyển khoản với đúng số tiền và nội dung cần chuyển.
+                        </div>
                     </div>
+
+                    <script>
+                    function hienThongBao() {
+                        const select = document.getElementById('thanhtoan-select');
+                        const thongbao = document.getElementById('thongbao-chuyenkhoan');
+                        if (select.value === 'Chuyển khoản ngân hàng') {
+                            thongbao.style.display = 'block';
+                        } else {
+                            thongbao.style.display = 'none';
+                        }
+                    }
+                    </script>
+
 
                     <div class="mb-4">
                         <h5 class="text-end">Tổng tiền: <span class="text-danger"><?= number_format(getTotalPrice()); ?>

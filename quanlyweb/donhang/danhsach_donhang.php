@@ -7,7 +7,7 @@ $types = '';
 
 if (!empty($_GET['id'])) {
     $where[] = "id = ?";
-    $params[] = (int)$_GET['id'];
+    $params[] = (int) $_GET['id'];
     $types .= 'i';
 }
 
@@ -45,7 +45,7 @@ if (!empty($where)) {
     $where_sql = "WHERE " . implode(" AND ", $where);
 }
 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $per_page = 20;
 $offset = ($page - 1) * $per_page;
 
@@ -98,7 +98,7 @@ $result = $stmt->get_result();
 
 // Cập nhật trạng thái đơn hàng
 if (isset($_POST['update_status'])) {
-    $id = (int)$_POST['id'];
+    $id = (int) $_POST['id'];
     $trang_thai = $_POST['trang_thai'];
 
     $stmt = $link->prepare("UPDATE donhang SET trang_thai = ? WHERE id = ?");
@@ -106,10 +106,10 @@ if (isset($_POST['update_status'])) {
     $stmt->execute();
     $stmt->close();
 
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
     echo '<script>window.location.href = "quan_tri.php?p=danhsach_donhang&page=' . $page . '";</script>';
-    exit; 
+    exit;
 }
 
 // Ngày hôm nay
@@ -166,7 +166,8 @@ $result6 = $stmt6->get_result()->fetch_assoc();
 $doanhthu_nam = $result6['total'] ?? 0;
 
 // Hàm chuyển tiếng Việt sang không dấu để dùng làm class CSS
-function khong_dau($str) {
+function khong_dau($str)
+{
     $str = strtolower($str);
     $str = preg_replace('/[áàảãạăắằẳẵặâấầẩẫậ]/u', 'a', $str);
     $str = preg_replace('/[éèẻẽẹêếềểễệ]/u', 'e', $str);
@@ -181,166 +182,188 @@ function khong_dau($str) {
 ?>
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <title>Quản lý đơn hàng</title>
     <style>
-    .badge.cho {
-        background-color: yellow; color: black;
-    }
-    .badge.xac-nhan {
-        background-color: green; color: white;
-    }
-    .badge.dang-giao {
-        background-color: blue; color: white;
-    }
-    .badge.hoan-thanh {
-        background-color: lightgreen; color: black;
-    }
-    .badge.huy {
-        background-color: red; color: white;
-    }
+        .badge.cho {
+            background-color: yellow;
+            color: black;
+        }
+
+        .badge.xac-nhan {
+            background-color: green;
+            color: white;
+        }
+
+        .badge.dang-giao {
+            background-color: blue;
+            color: white;
+        }
+
+        .badge.hoan-thanh {
+            background-color: lightgreen;
+            color: black;
+        }
+
+        .badge.huy {
+            background-color: red;
+            color: white;
+        }
     </style>
 </head>
+
 <body class="bg-light">
-<div class="container py-5">
-    <h2 class="mb-4">Quản lý đơn hàng</h2>
-    <form method="GET" class="mb-4 row g-3">
-        <input type="hidden" name="p" value="danhsach_donhang">
-        <div class="col-md-2">
-            <input type="text" name="id" class="form-control" placeholder="Mã đơn" value="<?= $_GET['id'] ?? '' ?>">
-        </div>
-        <div class="col-md-2">
-            <input type="text" name="hoten" class="form-control" placeholder="Tên khách" value="<?= $_GET['hoten'] ?? '' ?>">
-        </div>
-        <div class="col-md-2">
-            <input type="text" name="sdt" class="form-control" placeholder="SĐT" value="<?= $_GET['sdt'] ?? '' ?>">
-        </div>
-        <div class="col-md-2">
-            <input type="date" name="from" class="form-control" value="<?= $_GET['from'] ?? '' ?>">
-        </div>
-        <div class="col-md-2">
-            <input type="date" name="to" class="form-control" value="<?= $_GET['to'] ?? '' ?>">
-        </div>
-        <div class="col-md-2">
-            <select name="trang_thai" class="form-select">
-                <option value="">Tất cả trạng thái</option>
-                <option value="chờ" <?= ($_GET['trang_thai'] ?? '') == 'chờ' ? 'selected' : '' ?>>Chờ</option>
-                <option value="xác nhận" <?= ($_GET['trang_thai'] ?? '') == 'xác nhận' ? 'selected' : '' ?>>Xác nhận</option>
-                <option value="đang giao" <?= ($_GET['trang_thai'] ?? '') == 'đang giao' ? 'selected' : '' ?>>Đang giao</option>
-                <option value="hoàn thành" <?= ($_GET['trang_thai'] ?? '') == 'hoàn thành' ? 'selected' : '' ?>>Hoàn thành</option>
-                <option value="hủy" <?= ($_GET['trang_thai'] ?? '') == 'hủy' ? 'selected' : '' ?>>Hủy</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary w-100">Lọc</button>
-        </div>
-    </form>
+    <div class="container py-5">
+        <h2 class="mb-4">Quản lý đơn hàng</h2>
+        <form method="GET" class="mb-4 row g-3">
+            <input type="hidden" name="p" value="danhsach_donhang">
+            <div class="col-md-2">
+                <input type="text" name="id" class="form-control" placeholder="Mã đơn" value="<?= $_GET['id'] ?? '' ?>">
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="hoten" class="form-control" placeholder="Tên khách"
+                    value="<?= $_GET['hoten'] ?? '' ?>">
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="sdt" class="form-control" placeholder="SĐT" value="<?= $_GET['sdt'] ?? '' ?>">
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="from" class="form-control" value="<?= $_GET['from'] ?? '' ?>">
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="to" class="form-control" value="<?= $_GET['to'] ?? '' ?>">
+            </div>
+            <div class="col-md-2">
+                <select name="trang_thai" class="form-select">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="chờ" <?= ($_GET['trang_thai'] ?? '') == 'chờ' ? 'selected' : '' ?>>Chờ</option>
+                    <option value="xác nhận" <?= ($_GET['trang_thai'] ?? '') == 'xác nhận' ? 'selected' : '' ?>>Xác nhận
+                    </option>
+                    <option value="đang giao" <?= ($_GET['trang_thai'] ?? '') == 'đang giao' ? 'selected' : '' ?>>Đang giao
+                    </option>
+                    <option value="hoàn thành" <?= ($_GET['trang_thai'] ?? '') == 'hoàn thành' ? 'selected' : '' ?>>Hoàn
+                        thành</option>
+                    <option value="hủy" <?= ($_GET['trang_thai'] ?? '') == 'hủy' ? 'selected' : '' ?>>Hủy</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Lọc</button>
+            </div>
+        </form>
 
 
-    <table class="table table-bordered table-hover align-middle">
-        <thead class="table-primary">
-        <tr>
-            <th>#ID</th>
-            <th>Họ tên</th>
-            <th>SĐT</th>
-            <th>Email</th>
-            <th>Địa chỉ</th>
-            <th>Thanh toán</th>
-            <th>Tổng tiền</th>
-            <th>Ngày đặt</th>
-            <th>Trạng thái</th>
-            <th>Thao tác</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php while ($row = $result->fetch_assoc()): ?>
-            <tr>
-                <td><?= $row['id'] ?></td>
-                <td><?= htmlspecialchars($row['hoten']) ?></td>
-                <td><?= htmlspecialchars($row['sdt']) ?></td>
-                <td><?= htmlspecialchars($row['email']) ?></td>
-                <td><?= htmlspecialchars($row['diachi']) ?></td>
-                <td><?= htmlspecialchars($row['thanhtoan']) ?></td>
-                <td><?= number_format($row['tongtien']) ?> đ</td>
-                <td><?= $row['ngaydat'] ?></td>
-                <td>
-                    <span class="badge <?= khong_dau($row['trang_thai']) ?>">
-                        <?= htmlspecialchars($row['trang_thai']) ?>
-                    </span>
-                </td>
-                <td>
-                    <form method="POST">
-                        <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                        <div class="d-flex flex-column gap-1">
-                            <select name="trang_thai" class="form-select form-control">
-                                <option value="chờ" <?= $row['trang_thai'] == 'chờ' ? 'selected' : '' ?>>Chờ</option>
-                                <option value="xác nhận" <?= $row['trang_thai'] == 'xác nhận' ? 'selected' : '' ?>>Xác nhận</option>
-                                <option value="đang giao" <?= $row['trang_thai'] == 'đang giao' ? 'selected' : '' ?>>Đang giao</option>
-                                <option value="hoàn thành" <?= $row['trang_thai'] == 'hoàn thành' ? 'selected' : '' ?>>Hoàn thành</option>
-                                <option value="hủy" <?= $row['trang_thai'] == 'hủy' ? 'selected' : '' ?>>Hủy</option>
-                            </select>
-                            <button type="submit" name="update_status" class="btn btn-sm btn-primary mt-2">Cập nhật</button>
-                            <a href="quan_tri.php?p=chitiet_donhang&id=<?= $row['id'] ?>" class="btn btn-sm btn-info mt-2">Chi tiết</a>
-                            <a href="quan_tri.php?p=xoa_donhang&id=<?= $row['id'] ?>" class="btn btn-sm btn-danger mt-2" onclick="return confirm('Bạn chắc chắn muốn xóa đơn hàng này?')">Xóa</a>
-                        </div>
-                    </form>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-        </tbody>
-    </table>
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th>#ID</th>
+                    <th>Họ tên</th>
+                    <th>SĐT</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Thanh toán</th>
+                    <th>Tổng tiền</th>
+                    <th>Ngày đặt</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= $row['id'] ?></td>
+                        <td><?= htmlspecialchars($row['hoten']) ?></td>
+                        <td><?= htmlspecialchars($row['sdt']) ?></td>
+                        <td><?= htmlspecialchars($row['email']) ?></td>
+                        <td><?= htmlspecialchars($row['diachi']) ?></td>
+                        <td><?= htmlspecialchars($row['thanhtoan']) ?></td>
+                        <td><?= number_format($row['tongtien']) ?> đ</td>
+                        <td><?= $row['ngaydat'] ?></td>
+                        <td>
+                            <span class="badge <?= khong_dau($row['trang_thai']) ?>">
+                                <?= htmlspecialchars($row['trang_thai']) ?>
+                            </span>
+                        </td>
+                        <td>
+                            <form method="POST">
+                                <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                <div class="d-flex flex-column gap-1">
+                                    <select name="trang_thai" class="form-select form-control">
+                                        <option value="chờ" <?= $row['trang_thai'] == 'chờ' ? 'selected' : '' ?>>Chờ</option>
+                                        <option value="xác nhận" <?= $row['trang_thai'] == 'xác nhận' ? 'selected' : '' ?>>Xác
+                                            nhận</option>
+                                        <option value="đang giao" <?= $row['trang_thai'] == 'đang giao' ? 'selected' : '' ?>>
+                                            Đang giao</option>
+                                        <option value="hoàn thành" <?= $row['trang_thai'] == 'hoàn thành' ? 'selected' : '' ?>>
+                                            Hoàn thành</option>
+                                        <option value="hủy" <?= $row['trang_thai'] == 'hủy' ? 'selected' : '' ?>>Hủy</option>
+                                    </select>
+                                    <button type="submit" name="update_status" class="btn btn-sm btn-primary mt-2">Cập
+                                        nhật</button>
+                                    <a href="quan_tri.php?p=chitiet_donhang&id=<?= $row['id'] ?>"
+                                        class="btn btn-sm btn-info mt-2">Chi tiết</a>
+                                    <a href="quan_tri.php?p=xoa_donhang&id=<?= $row['id'] ?>"
+                                        class="btn btn-sm btn-danger mt-2"
+                                        onclick="return confirm('Bạn chắc chắn muốn xóa đơn hàng này?')">Xóa</a>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
 
-    <!-- PHÂN TRANG -->
-   <!-- PHÂN TRANG -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <?php
-            for ($i = 1; $i <= $total_pages; $i++):
-                $query = $_GET;
-                $query['page'] = $i;
-                $url = 'quan_tri.php?' . http_build_query($query);
-            ?>
-                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                    <a class="page-link" href="<?= $url ?>"><?= $i ?></a>
+        <!-- PHÂN TRANG -->
+        <!-- PHÂN TRANG -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <?php
+                for ($i = 1; $i <= $total_pages; $i++):
+                    $query = $_GET;
+                    $query['page'] = $i;
+                    $url = 'quan_tri.php?' . http_build_query($query);
+                    ?>
+                    <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                        <a class="page-link" href="<?= $url ?>"><?= $i ?></a>
+                    </li>
+                <?php endfor; ?>
+            </ul>
+        </nav>
+
+
+        <!-- THỐNG KÊ ĐƠN HÀNG HOÀN THÀNH -->
+
+        <div class="mt-4">
+            <h4 style="color:blue">Thống kê đơn hoàn thành</h4>
+            <ul class="list-group">
+                <li class="list-group-item">Trong ngày hôm nay (<?= date('d/m/Y') ?>): <strong><?= $don_ngay ?></strong>
+                    đơn</li>
+                <li class="list-group-item">Trong tháng <?= date('m/Y') ?>: <strong><?= $don_thang ?></strong> đơn</li>
+                <li class="list-group-item">Trong năm <?= date('Y') ?>: <strong><?= $don_nam ?></strong> đơn</li>
+            </ul>
+        </div>
+
+        <!-- THỐNG KÊ DOANH THU -->
+
+        <div class="mt-4">
+            <h4 style="color:blue">Doanh thu</h4>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Trong ngày hôm nay (<?= date('d/m/Y') ?>):</strong>
+                    <?= $don_ngay ?> đơn | Doanh thu: <strong><?= number_format($doanhthu_ngay) ?> đ</strong>
                 </li>
-            <?php endfor; ?>
-        </ul>
-    </nav>
-
-
-    <!-- THỐNG KÊ ĐƠN HÀNG HOÀN THÀNH -->
-
-    <div class="mt-4">
-        <h4 style="color:blue">Thống kê đơn hoàn thành</h4>
-        <ul class="list-group">
-            <li class="list-group-item">Trong ngày hôm nay (<?= date('d/m/Y') ?>): <strong><?= $don_ngay ?></strong> đơn</li>
-            <li class="list-group-item">Trong tháng <?= date('m/Y') ?>: <strong><?= $don_thang ?></strong> đơn</li>
-            <li class="list-group-item">Trong năm <?= date('Y') ?>: <strong><?= $don_nam ?></strong> đơn</li>
-        </ul>
+                <li class="list-group-item">
+                    <strong>Trong tháng <?= date('m/Y') ?>:</strong>
+                    <?= $don_thang ?> đơn | Doanh thu: <strong><?= number_format($doanhthu_thang) ?> đ</strong>
+                </li>
+                <li class="list-group-item">
+                    <strong>Trong năm <?= date('Y') ?>:</strong>
+                    <?= $don_nam ?> đơn | Doanh thu: <strong><?= number_format($doanhthu_nam) ?> đ</strong>
+                </li>
+            </ul>
+        </div>
     </div>
-
-    <!-- THỐNG KÊ DOANH THU -->
-
-    <div class="mt-4">
-        <h4 style="color:blue">Doanh thu</h4>
-        <ul class="list-group">
-            <li class="list-group-item">
-                <strong>Trong ngày hôm nay (<?= date('d/m/Y') ?>):</strong> 
-                <?= $don_ngay ?> đơn | Doanh thu: <strong><?= number_format($doanhthu_ngay) ?> đ</strong>
-            </li>
-            <li class="list-group-item">
-                <strong>Trong tháng <?= date('m/Y') ?>:</strong> 
-                <?= $don_thang ?> đơn | Doanh thu: <strong><?= number_format($doanhthu_thang) ?> đ</strong>
-            </li>
-            <li class="list-group-item">
-                <strong>Trong năm <?= date('Y') ?>:</strong> 
-                <?= $don_nam ?> đơn | Doanh thu: <strong><?= number_format($doanhthu_nam) ?> đ</strong>
-            </li>
-        </ul>
-    </div>
-</div>
 </body>
+
 </html>
-
-
